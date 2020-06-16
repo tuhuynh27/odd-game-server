@@ -5,7 +5,6 @@ const chatCollection = db.collection('chats')
 const getChats = async (req, res) => {
   const latestChats = await chatCollection
     .find()
-    .sort({ $natural: -1 })
     .limit(100)
     .toArray()
 
