@@ -3,11 +3,11 @@ const router = express.Router()
 
 const jwtMiddleware = require('middlewares/jwt.middleware')
 
-const { registerusernameValidator } = require('modules/authenticate/authenticate.schema')
-const { getMyusername, registerusername, logout } = require('modules/authenticate/authenticate.handler')
+const { registerUsernameValidator } = require('modules/authenticate/authenticate.schema')
+const { getMyUsername, registerUsername, logout } = require('modules/authenticate/authenticate.handler')
 
-router.route('/me').get(jwtMiddleware, getMyusername)
-router.route('/register').post(registerusernameValidator, registerusername)
+router.route('/me').get(jwtMiddleware, getMyUsername)
+router.route('/register').post(registerUsernameValidator, registerUsername)
 router.route('/logout').post(jwtMiddleware, logout)
 
 module.exports = router

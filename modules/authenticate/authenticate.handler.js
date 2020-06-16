@@ -2,18 +2,18 @@ const errorHandler = require('utils/handlers/error.handler')
 const { redisGet, redisSet, redisExpire, redisDelete } = require('storages/redis')
 const { createJWT } = require('utils/jwt/jwt')
 
-const getMyusername = async (req, res) => {
+const getMyUsername = async (req, res) => {
   res.send({
     username: req.username
   })
 }
 
-const registerusername = async (req, res) => {
+const registerUsername = async (req, res) => {
   const { username } = req.body
 
-  const isusernameExist = await redisGet(username)
+  const isUsernameExist = await redisGet(username)
 
-  if (!isusernameExist) {
+  if (!isUsernameExist) {
     await redisSet(username, 'user')
     await redisExpire(username, 60 * 60 * 24)
     const token = createJWT({ username })
@@ -41,4 +41,4 @@ const logout = async (req, res) => {
   })
 }
 
-module.exports = errorHandler({ getMyusername, registerusername, logout })
+module.exports = errorHandler({ getMyUsername, registerUsername, logout })
