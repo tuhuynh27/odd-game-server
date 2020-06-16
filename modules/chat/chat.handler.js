@@ -1,5 +1,5 @@
 const errorHandler = require('utils/handlers/error.handler')
-const db = require('configs/mongodb').getDB()
+const db = require('storages/mongodb').getDB()
 const chatCollection = db.collection('chats')
 
 const getChats = async (req, res) => {

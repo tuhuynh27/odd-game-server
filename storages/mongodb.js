@@ -1,10 +1,10 @@
 const MongoClient = require('mongodb').MongoClient
-const url = 'mongodb://localhost:27017/odd-game-db'
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/odd-game-db'
 
 let db = null
 
 const initDB = async () => {
-  const client = await MongoClient.connect(process.env.MONGODB_URI || url, {
+  const client = await MongoClient.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

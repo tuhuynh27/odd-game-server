@@ -1,5 +1,5 @@
 const errorHandler = require('utils/handlers/error.handler')
-const { redisGet, redisSet, redisExpire } = require('configs/redis')
+const { redisGet, redisSet, redisExpire } = require('storages/redis')
 const { createJWT } = require('utils/jwt/jwt')
 
 const getMyUserName = async (req, res) => {

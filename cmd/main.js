@@ -3,8 +3,8 @@ require('dotenv').config()
 
 const app = require('server/app')
 const mountSocketIOHandlers = require('server/socket')
-const initDB = require('configs/mongodb').initDB
-const initRedis = require('configs/redis').initRedis
+const initDB = require('storages/mongodb').initDB
+const initRedis = require('storages/redis').initRedis
 
 const main = async () => {
   try {
