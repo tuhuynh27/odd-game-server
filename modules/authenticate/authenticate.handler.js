@@ -1,22 +1,22 @@
 const errorHandler = require('utils/handlers/error.handler')
-const { redisGet, redisSet, redisExpire } = require('storages/redis')
+const { redisGet, redisSet, redisExpire, redisDelete } = require('storages/redis')
 const { createJWT } = require('utils/jwt/jwt')
 
-const getMyUserName = async (req, res) => {
+const getMyusername = async (req, res) => {
   res.send({
-    userName: req.userName
+    username: req.username
   })
 }
 
-const registerUsername = async (req, res) => {
-  const { userName } = req.body
+const registerusername = async (req, res) => {
+  const { username } = req.body
 
-  const isUserNameExist = await redisGet(userName)
+  const isusernameExist = await redisGet(username)
 
-  if (!isUserNameExist) {
-    await redisSet(userName, 'user')
-    await redisExpire(userName, 60 * 60 * 24)
-    const token = createJWT({ userName })
+  if (!isusernameExist) {
+    await redisSet(username, 'user')
+    await redisExpire(username, 60 * 60 * 24)
+    const token = createJWT({ username })
 
     res.cookie('token', token, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true })
 
@@ -27,8 +27,18 @@ const registerUsername = async (req, res) => {
   }
 
   res.status(400).send({
-    message: 'Username is already picked'
+    message: 'username is already picked'
   })
 }
 
-module.exports = errorHandler({ getMyUserName, registerUsername })
+const logout = async (req, res) => {
+  await redisDelete(req.username)
+
+  res.cookie('token', null, { maxAge: 0, httpOnly: true })
+
+  res.send({
+    success: true
+  })
+}
+
+module.exports = errorHandler({ getMyusername, registerusername, logout })

@@ -40,4 +40,14 @@ const redisExpire = (key, time) => new Promise((resolve, reject) => {
   })
 })
 
-module.exports = { initRedis, redisGet, redisSet, redisExpire }
+const redisDelete = (key) => new Promise((resolve, reject) => {
+  client.del(key, (error, result) => {
+    if (error) {
+      reject(error)
+    }
+
+    resolve(result)
+  })
+})
+
+module.exports = { initRedis, redisGet, redisSet, redisExpire, redisDelete }

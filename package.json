@@ -2,7 +2,7 @@
   "name": "backend-api",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "cmd/index.js",
   "scripts": {
     "start": "node cmd/main.js",
     "lint": "standard",
@@ -15,7 +15,6 @@
   "dependencies": {
     "@hapi/joi": "^16.1.8",
     "app-module-path": "^2.2.0",
-    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie": "^0.4.1",

@@ -4,8 +4,8 @@ const jwtMiddleware = (req, res, next) => {
   try {
     const token = getTokenFromHeader(req) || req.cookies.token
     const payload = verifyJWT(token)
-    const { userName } = payload
-    req.userName = userName
+    const { username } = payload
+    req.username = username
     next()
   } catch (err) {
     res.status(401)

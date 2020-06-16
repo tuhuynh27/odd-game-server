@@ -1,12 +1,12 @@
 const Joi = require('@hapi/joi')
 const validateMiddleware = require('utils/handlers/validate.middleware')
 
-const registerUserNameSchema = Joi.object({
-  userName: Joi.string()
+const registerusernameSchema = Joi.object({
+  username: Joi.string()
     .min(3)
     .required()
 })
 
-const registerUserNameValidator = validateMiddleware(registerUserNameSchema)
+const registerusernameValidator = validateMiddleware(registerusernameSchema)
 
-module.exports = { registerUserNameValidator }
+module.exports = { registerusernameValidator }

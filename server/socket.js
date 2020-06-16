@@ -6,7 +6,7 @@ const mountSocketIOHandlers = (io) => {
     if (socket.handshake.headers && socket.handshake.headers.cookie) {
       try {
         const cookies = cookie.parse(socket.handshake.headers.cookie)
-        socket.userName = verifyJWT(cookies.token).userName
+        socket.username = verifyJWT(cookies.token).username
         next()
       } catch (err) {
         next(new Error('Authentication error'))
@@ -21,7 +21,7 @@ const mountSocketIOHandlers = (io) => {
     chatSocketHandler(io, socket)
 
     socket.on('disconnect', () => {
-      io.emit(`user ${socket.userName} disconnected`)
+      io.emit(`user ${socket.username} disconnected`)
     })
   })
 }
