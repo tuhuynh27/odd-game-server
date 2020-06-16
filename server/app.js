@@ -5,7 +5,9 @@ const createServer = (app, beginMiddlewares, routes, endMiddlewares) => {
 
   const server = require('http').createServer(app)
   const io = require('socket.io')(server)
+
   io.origins('*:*')
+
   return {
     http: server,
     io
@@ -21,15 +23,13 @@ const createServerWrapper = () => {
   const bodyParseUrl = require('body-parser').urlencoded({ extended: false })
   const bodyParseJson = require('body-parser').json()
   const errorMiddleware = require('middlewares/error.middleware')
-  const jsonMiddleware = require('middlewares/json.middleware')
 
   const beginMiddlewares = [
     corsMiddleware,
     compression,
     cookieParser,
     bodyParseUrl,
-    bodyParseJson,
-    jsonMiddleware
+    bodyParseJson
   ]
 
   const defaultHandler = (_, res) => {
