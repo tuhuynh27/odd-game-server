@@ -1,25 +1,38 @@
 const errorHandler = require('utils/handlers/error.handler')
+const db = require('storages/mongodb').getDB()
+const roomCollection = db.collection('rooms')
+roomCollection.createIndex({ name: 1 }, { unique: true })
+
+const createRoom = async (req, res) => {
+  const newRoom = req.body
+  const { country } = req.params
+
+  const defaultProperties = {
+    host: req.username,
+    current: 0,
+    guest: 0,
+    status: 'WAITING',
+    country
+  }
+
+  const newRoomObj = {
+    ...defaultProperties,
+    ...newRoom
+  }
+
+  await roomCollection.insertOne(newRoomObj)
+  res.send({ message: 'Room created' })
+}
 
 const getRooms = async (req, res) => {
   const { country } = req.params
-  const mockData = country === 'en' ? new Array(26).fill(null).map((_, i) => ({
-    id: i,
-    name: `Room ${i}`,
-    host: `Player${(i % 3) + 1}`,
-    total: 10,
-    current: Math.floor(Math.random() * 10),
-    viewers: Math.floor(Math.random() * 15),
-    status: Math.floor(Math.random() * 3)
-  })) : new Array(26).fill(null).map((_, i) => ({
-    id: i + 26,
-    name: `Phòng ${i}`,
-    host: `Player${(i % 3) + 1}`,
-    total: 10,
-    current: Math.floor(Math.random() * 10),
-    viewers: Math.floor(Math.random() * 15),
-    status: Math.floor(Math.random() * 3)
-  }))
-  res.send(mockData)
+
+  const rooms = await roomCollection
+    .find({ country })
+    .sort({ $nature: -1 })
+    .toArray()
+
+  res.send(rooms)
 }
 
-module.exports = errorHandler({ getRooms })
+module.exports = errorHandler({ createRoom, getRooms })
