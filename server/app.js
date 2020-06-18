@@ -4,7 +4,7 @@ const createServer = (app, beginMiddlewares, routes, endMiddlewares) => {
   app.use(endMiddlewares)
 
   const server = require('http').createServer(app)
-  const io = require('socket.io')(server)
+  const io = require('socket.io')(server, { pingInterval: 5000 })
 
   io.origins('*:*')
 

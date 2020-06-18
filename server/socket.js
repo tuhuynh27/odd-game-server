@@ -20,6 +20,10 @@ const mountSocketIOHandlers = (io) => {
     const chatSocketHandler = require('modules/chat/chat.socket')
     chatSocketHandler(io, socket)
 
+    socket.on('ping', () => {
+      socket.emit('pong')
+    })
+
     socket.on('disconnect', () => {
       io.emit(`user ${socket.username} disconnected`)
     })
