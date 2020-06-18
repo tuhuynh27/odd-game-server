@@ -20,8 +20,8 @@ const createRoom = async (req, res) => {
     ...newRoom
   }
 
-  await roomCollection.insertOne(newRoomObj)
-  res.send({ message: 'Room created' })
+  const { insertedId } = await roomCollection.insertOne(newRoomObj)
+  res.send({ _id: insertedId })
 }
 
 const getRooms = async (req, res) => {
