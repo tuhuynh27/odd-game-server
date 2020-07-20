@@ -18,9 +18,7 @@ const populateCardsData = async () => {
     }
 
     console.log('Populating data....')
-    cards.forEach(card => {
-      cardCollection.insertOne(card)
-    })
+    cardCollection.insertMany(cards)
 
     console.log('Done!!!')
   } catch (err) {
