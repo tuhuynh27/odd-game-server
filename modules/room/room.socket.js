@@ -20,7 +20,7 @@ const roomSocketHandler = (io, socket) => {
       const blackCardId = blackCard[0]._id.toString()
       const collectionCardIds = cards.map(card => card._id.toString())
 
-      io.emit(slug, {
+      io.emit(`session-${slug}`, {
         roomInfo: {
           _id: 1,
           slug: slug,
