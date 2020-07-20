@@ -4,7 +4,7 @@
   "description": "",
   "main": "cmd/index.js",
   "scripts": {
-    "start": "node cmd/main.js",
+    "start": "nodemon cmd/main.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "echo \"Error: no test specified\" && exit 1",

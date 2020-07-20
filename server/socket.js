@@ -18,7 +18,9 @@ const mountSocketIOHandlers = (io) => {
 
   io.on('connection', (socket) => {
     const chatSocketHandler = require('modules/chat/chat.socket')
+    const roomSocketHandler = require('modules/room/room.socket')
     chatSocketHandler(io, socket)
+    roomSocketHandler(io, socket)
 
     socket.on('ping', () => {
       socket.emit('pong')
