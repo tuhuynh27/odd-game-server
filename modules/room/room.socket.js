@@ -4,9 +4,9 @@ const privateChatCollection = db.collection('private-chats')
 
 const roomSocketHandler = (io, socket) => {
   socket.on('join-room', async ({ operation, slug }) => {
-    if (!socket.inRoom) {
+    if (!socket.roomSlug) {
       socket.join(slug)
-      socket.inRoom = slug
+      socket.roomSlug = slug
 
       const blackCard = await cardCollection.aggregate([
         { $match: { color: 'black' } },
@@ -35,21 +35,21 @@ const roomSocketHandler = (io, socket) => {
   })
 
   socket.on('chat-private', (message) => {
-    if (!socket.inRoom) return
+    if (!socket.roomSlug) return
 
     const newChat = {
       username: socket.username,
       message,
       time: new Date().getTime() / 1000,
-      room: socket.inRoom
+      room: socket.roomSlug
     }
     privateChatCollection.insertOne(newChat).catch(err => console.error(err))
-    io.emit(socket.inRoom, 'chat', socket.username, message)
+    io.emit(socket.roomSlug, 'chat', socket.username, message)
   })
 
   socket.on('leave room', (roomName) => {
     socket.leave(roomName)
-    socket.inRoom = null
+    socket.roomSlug = null
   })
 }
 
