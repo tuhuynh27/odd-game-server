@@ -25,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.9",
     "redis": "^3.0.2",
+    "slugify": "^1.4.4",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
