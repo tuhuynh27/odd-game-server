@@ -16,12 +16,7 @@ const populateCardsData = async () => {
       console.log('Drop cards database...')
       cardCollection.drop()
     }
-
-    console.log('Populating data....')
-    cards.forEach(card => {
-      cardCollection.insertOne(card)
-    })
-
+    cardCollection.insertMany(cards)
     console.log('Done!!!')
   } catch (err) {
     console.error(err)

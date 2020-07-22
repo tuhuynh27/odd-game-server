@@ -7,4 +7,7 @@ const updatedTimestamp = () => ({
   updatedAt: new Date().getTime() / 1000
 })
 
-module.exports = { createdTimestamp, updatedTimestamp }
+module.exports = {
+  createdTimestamp,
+  updatedTimestamp
+}
