@@ -20,4 +20,9 @@ const main = async () => {
   }
 }
 
+process.on('SIGTERM', () => {
+  // TODO: Grateful shutdown
+  console.log('Received SIGTERM.')
+})
+
 main().then(_ => console.log('Process started!'))
