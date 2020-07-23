@@ -26,13 +26,14 @@ const roomSocketHandler = (io, socket) => {
           slug: slug,
           round: 0
         },
-        mode: operation === 'join' ? 1 : 0,
+        mode: operation === 'join' ? 1 : 0, // 0/1 => Spectate/Join mode
         collectionCards: collectionCardIds,
         blackCard: blackCardId,
         playedCards: []
       }))
     }
   })
+
   socket.on('leave room', (roomName) => {
     socket.leave(roomName)
     socket.inRoom = null
