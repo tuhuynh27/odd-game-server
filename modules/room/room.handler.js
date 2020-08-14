@@ -3,14 +3,13 @@ const errorHandler = require('utils/handlers/error.handler')
 const db = require('storages/mongodb').getDB()
 const roomCollection = db.collection('rooms')
 roomCollection.createIndex({ name: 1 }, { unique: true })
+const privateChatCollection = db.collection('private-chats')
 
 const createRoom = async (req, res) => {
   const newRoom = req.body
   const { country } = req.params
   const { name } = newRoom
   const slugName = slugify(name.toLowerCase())
-
-  console.log(slugName)
 
   const defaultProperties = {
     host: req.username,
@@ -44,4 +43,15 @@ const getRooms = async (req, res) => {
   res.send(rooms)
 }
 
-module.exports = errorHandler({ createRoom, getRooms })
+const getRoomChat = async (req, res) => {
+  const { slug } = req.params
+
+  const chats = await privateChatCollection
+    .find({ room: slug })
+    .sort({ $nature: -1 })
+    .toArray()
+
+  res.send(chats)
+}
+
+module.exports = errorHandler({ createRoom, getRooms, getRoomChat })
