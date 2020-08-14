@@ -1,6 +1,6 @@
-const { camelizeKeys } = require('utils')
 const db = require('storages/mongodb').getDB()
 const cardCollection = db.collection('cards')
+const privateChatCollection = db.collection('private-chats')
 
 const roomSocketHandler = (io, socket) => {
   socket.on('join-room', async ({ operation, slug }) => {
@@ -20,7 +20,7 @@ const roomSocketHandler = (io, socket) => {
       const blackCardId = blackCard[0]._id.toString()
       const collectionCardIds = cards.map(card => card._id.toString())
 
-      io.emit('game-session', camelizeKeys({
+      io.emit(slug, {
         roomInfo: {
           _id: 1,
           slug: slug,
@@ -30,8 +30,21 @@ const roomSocketHandler = (io, socket) => {
         collectionCards: collectionCardIds,
         blackCard: blackCardId,
         playedCards: []
-      }))
+      })
     }
+  })
+
+  socket.on('chat-private', (message) => {
+    if (!socket.inRoom) return
+
+    const newChat = {
+      username: socket.username,
+      message,
+      time: new Date().getTime() / 1000,
+      room: socket.inRoom
+    }
+    privateChatCollection.insertOne(newChat).catch(err => console.error(err))
+    io.emit(socket.inRoom, 'chat', socket.username, message)
   })
 
   socket.on('leave room', (roomName) => {
