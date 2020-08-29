@@ -47,7 +47,7 @@ const roomSocketHandler = (io, socket) => {
     io.emit(socket.roomSlug, 'chat', socket.username, message)
   })
 
-  socket.on('leave room', (roomName) => {
+  socket.on('leave-room', (roomName) => {
     socket.leave(roomName)
     socket.roomSlug = null
   })
