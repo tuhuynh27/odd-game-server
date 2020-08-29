@@ -35,7 +35,6 @@ const roomSocketHandler = (io, socket) => {
   })
 
   socket.on('chat-private', (message) => {
-    console.log(message, socket.roomSlug)
     if (!socket.roomSlug) return
 
     const newChat = {
