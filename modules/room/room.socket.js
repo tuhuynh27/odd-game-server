@@ -35,6 +35,7 @@ const roomSocketHandler = (io, socket) => {
   })
 
   socket.on('chat-private', (message) => {
+    console.log(message, socket.roomSlug)
     if (!socket.roomSlug) return
 
     const newChat = {
@@ -47,7 +48,7 @@ const roomSocketHandler = (io, socket) => {
     io.emit(socket.roomSlug, 'chat', socket.username, message)
   })
 
-  socket.on('leave room', (roomName) => {
+  socket.on('leave-room', (roomName) => {
     socket.leave(roomName)
     socket.roomSlug = null
   })
