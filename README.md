@@ -1,3 +1,5 @@
+[![Made in Vietnam](https://raw.githubusercontent.com/webuild-community/badge/master/svg/made.svg)](https://webuild.community)
+
 # Odd Game Server
 
 ## Quick Start
